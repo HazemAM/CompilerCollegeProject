@@ -1,0 +1,12 @@
+x:=3;
+read y;
+
+if x<y
+
+repeat 
+
+write x;
+x:=x+1;
+until y<x
+
+end

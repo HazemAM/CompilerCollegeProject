@@ -1,0 +1,9 @@
+x := 3 ;
+read y ;
+
+{ this is tiny c code}
+repeat 
+
+write x ;
+x := x + 1 ;
+until y < x
