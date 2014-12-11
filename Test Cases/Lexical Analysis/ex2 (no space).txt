@@ -1,12 +1,12 @@
 x:=3;
-read y;
+Read y;
 
-if x<y
+If x<y
 
-repeat 
+Repeat 
 
-write x;
+Write x;
 x:=x+1;
-until y<x
+Until y<x
 
-end
+End

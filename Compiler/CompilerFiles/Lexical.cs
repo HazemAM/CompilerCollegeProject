@@ -145,7 +145,7 @@ namespace Compiler
 
         private void acceptStreak(int greatNode, string streak){
             string desc;
-            if(reservedWords.Contains(streak)) desc="Reserved Word";
+            if(reservedWords.Contains(streak.ToLower())) desc="Reserved Word";
             else finalNodes.TryGetValue(greatNode, out desc);
             
             log.Add( new string[]{"Accepted", streak, desc} );
