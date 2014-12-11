@@ -52,23 +52,26 @@ namespace Compiler
                 string[] theLine = theFileLines[i].Split(new String[]{" "}, StringSplitOptions.RemoveEmptyEntries);
                 
                 switch(i){
-                case 0: //The first line: Read start and final nodes.
-                    startNode  = int.Parse(theLine[0]);
-                    /*finalNodes = new int[theLine.Length-1]; //The old yaw: -1 for the start node place.*/
-                    for(int j=1; j<theLine.Length; j++){
+                case 0: //The first line: Read start node.
+                    startNode = int.Parse(theLine[0]);
+                    break;
+                case 1: //Second line: Read final nodes.
+                    /*finalNodes = new int[theLine.Length]; //The old yaw.*/
+                    theLine = theFileLines[i].Split(new String[]{" - "}, StringSplitOptions.RemoveEmptyEntries);
+                    for(int j=0; j<theLine.Length; j++){
                         var tempFinal = theLine[j].Split('|'); //Splitting, where [0]=finalNodeNumber [1]=finalNodeDescription
                         finalNodes[int.Parse(tempFinal[0])] = tempFinal[1];
                     }
                     break;
-                case 1:
+                case 2:
                     reservedWords = (string[])theLine.Clone();
                     break;
-                case 2: //A separator line; ignore.
+                case 3: //A separator line; ignore.
                     continue;
-                case 3: //Third line: Getting input types (digit, character, '{', '+', ...etc).
+                case 4: //Fourth line: Getting input types (digit, character, '{', '+', ...etc).
                     inputTypes = (string[])theLine.Clone();
                     break;
-                case 4: //A separator line; ignore.
+                case 5: //A separator line; ignore.
                     continue;
                 default: //All other lines: Getting all transitions in the line.
                     for(int index=1; index<theLine.Length; index++){
@@ -142,7 +145,7 @@ namespace Compiler
 
         private void acceptStreak(int greatNode, string streak){
             string desc;
-            if(reservedWords.Contains(streak)) desc="ReservedWord";
+            if(reservedWords.Contains(streak)) desc="Reserved Word";
             else finalNodes.TryGetValue(greatNode, out desc);
             
             log.Add( new string[]{"Accepted", streak, desc} );
