@@ -44,7 +44,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterType.cs" />
     <Compile Include="Lexical.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
