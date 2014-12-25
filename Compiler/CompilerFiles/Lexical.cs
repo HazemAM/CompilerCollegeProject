@@ -33,7 +33,7 @@ namespace Compiler
         private string[] inputTypes = null;
         private string[] reservedWords = null;
         private List<string[]> log = new List<string[]>();
-        private List<string> acceptedTokens = new List<string>();
+        private List<Token> acceptedTokens = new List<Token>();
         
 
         /** FUNCTIONS */
@@ -90,7 +90,7 @@ namespace Compiler
         /// <summary>Analyze a piece of code lexically.</summary>
         /// <param name="code">The code to analyze.</param>
         /// <returns>List object of accepted tokens.</returns>
-        public List<string> analyze(string code){
+        public List<Token> analyze(string code){
             log.Clear();
             acceptedTokens.Clear();
             analyzeStart(code);
@@ -154,7 +154,7 @@ namespace Compiler
             else finalNodes.TryGetValue(greatNode, out desc);
             
             log.Add( new string[]{"Accepted", streak, desc} );
-            acceptedTokens.Add(streak);
+            //acceptedTokens.Add(streak);
             //Console.WriteLine("Accepted: {0}, {1}", streak, desc);
         }
 
