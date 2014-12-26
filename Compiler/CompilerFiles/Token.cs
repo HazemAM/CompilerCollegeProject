@@ -2,8 +2,8 @@
 {
     public struct Token
     {
-        TokenType type;
-        string value;
+        public readonly TokenType type;
+        public readonly string value;
 
         public Token(TokenType type, string value){
             this.type = type;
@@ -13,7 +13,7 @@
 
     public enum TokenType
     {
-        EOF,
+        EOF, Error, Comment,
         ID, Num, NumFraction,
         If, Then, Else, End, Repeat, Until, Read, Write,
         Assign, Equal, LessThan, Plus, Minus, Times, LeftParentheses, RightParentheses, SemiColon,

@@ -129,6 +129,9 @@ namespace Compiler
 
             if(currStreak!=String.Empty) //If the code doesn't end with a newline or space.
                 acceptOrReject(currNode, currStreak);
+
+            Token token = toToken("$", "EOF"); //Add EOF token at the end.
+            acceptedTokens.Add(token);
         }
 
         public List<string[]> getLog(){
@@ -143,9 +146,12 @@ namespace Compiler
         }
 
         private void rejectStreak(string streak){
-            if(streak!=" " && streak!="\r" && streak!="\n" && streak!=String.Empty)
+            if(streak!=" " && streak!="\r" && streak!="\n" && streak!=String.Empty){
                 log.Add( new string[]{"REJECTED", streak, "--"} );
-                //Console.WriteLine("REJECTED: {0}", streak);
+                
+                Token token = toToken(streak, "Error");
+                acceptedTokens.Add(token);
+            }
         }
 
         private void acceptStreak(int greatNode, string streak){
@@ -154,8 +160,10 @@ namespace Compiler
             else finalNodes.TryGetValue(greatNode, out desc);
             
             log.Add( new string[]{"Accepted", streak, desc} );
-            //acceptedTokens.Add(streak);
-            //Console.WriteLine("Accepted: {0}, {1}", streak, desc);
+
+            Token token = toToken(streak, desc);
+            if(token.type!=TokenType.Comment)
+                acceptedTokens.Add(token);
         }
 
         private string getKey(char currChar){
@@ -171,6 +179,72 @@ namespace Compiler
 
         private bool isDigit(char currChar){
             return Regex.IsMatch(currChar.ToString(), @"[0-9]");
+        }
+
+        private Token toToken(string value, string desc){
+            TokenType type;
+            value = value.ToLower();
+            desc = desc.ToLower();
+
+            //Description-based:
+            if(desc.StartsWith("id"))
+                type = TokenType.ID;
+            else if(desc.Contains("fraction"))
+                type = TokenType.NumFraction;
+            else if(desc.StartsWith("number"))
+                type = TokenType.Num;
+            else if(desc.StartsWith("comment"))
+                type = TokenType.Comment;
+            else if(desc.StartsWith("eof"))
+                type = TokenType.EOF;
+            else if(desc.StartsWith("error"))
+                type = TokenType.Error;
+            else if(desc.StartsWith("reserved"))
+            {
+                switch(value){
+                case "if": type   = TokenType.If; break;
+                case "then": type = TokenType.Then; break;
+                case "else": type = TokenType.Else; break;
+                case "end": type  = TokenType.End; break;
+                case "repeat": type = TokenType.Repeat; break;
+                case "until": type = TokenType.Until; break;
+                case "read": type  = TokenType.Read; break;
+                case "write": type = TokenType.Write; break;
+                default:
+                    throw new ArgumentException("Unknown token.");
+                }
+            }
+
+            //Value-based:
+            else if (value.StartsWith("-"))
+                type = TokenType.Minus;
+            else if (value.StartsWith("+"))
+                type = TokenType.Plus;
+            else if (value.StartsWith("<"))
+                type = TokenType.LessThan;
+            else if (value.StartsWith("="))
+                type = TokenType.Equal;
+            else if (value.StartsWith("-="))
+                type = TokenType.AugmentedMinus;
+            else if (value.StartsWith("+="))
+                type = TokenType.AugmentedPlus;
+            else if (value.StartsWith("--"))
+                type = TokenType.Decrement;
+            else if (value.StartsWith("++"))
+                type = TokenType.Increment;
+            else if (value.StartsWith(":="))
+                type = TokenType.Assign;
+            else if (value.StartsWith(";"))
+                type = TokenType.SemiColon;
+            else if (value.StartsWith("*"))
+                type = TokenType.Times;
+            else if (value.StartsWith("("))
+                type = TokenType.LeftParentheses;
+            else if (value.StartsWith(")"))
+                type = TokenType.RightParentheses;
+            else throw new ArgumentException("Unknown token.");
+
+            return new Token(type, value);
         }
     }
 }
