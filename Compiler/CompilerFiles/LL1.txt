@@ -1,0 +1,56 @@
+﻿Prg,stsq’,st,ifstmt,if’,repeatSt,assignSt,readSt,writeSt,exp,E’,Cop,Smpexp,Smpexp’,addOp,term,term',mulOp,factor
+1|Prg-st stsq’
+2|stsq’-SemiColon st stsq’
+3|stsq’-Empty
+4|st-ifStmt
+5|st-repeatSt
+6|st-assignSt
+7|st-readSt
+8|st-writeSt
+9|ifstmt-If exp Then st stsq' if'
+10|if’-End
+11|if’-Else st stsq' End
+12|repeatSt-Repeat st stsq’ Until exp
+13|assignSt-ID Assign exp
+14|readSt-Read ID
+15|writeSt-Write exp
+16|exp-Smpexp E'
+17|E'-Cop Smpexp
+18|E'-Empty
+19|Cop-LessThan
+20|Cop-MoreThan
+21|Cop-Equal
+22|Smpexp-term Smpexp’
+23|Smpexp’-addOp term Smpexp’
+24|Smpexp’-Empty
+25|addOp-Plus
+26|addOp-Minus
+27|term-factor term’
+28|term’-mulop factor term’
+29|term’-Empty
+30|mulOp-Times
+31|mulOp-Division
+32|factor-LeftParentheses exp RightParentheses
+33|factor-Num
+34|factor-ID
+#
+SemiColon If Then End Else Repeat Until ID Assign Read Write LessThan MoreThan Equal Plus Minus Times Division LeftParentheses RightParentheses Num EOF
+Prg - 1 - - - 1 - 1 - 1 1 - - - - - - - - - - -
+Stsq' 2 - - 3 3 - 3 - - - - - - - - - - - - - - 3
+St - 4 - - - 5 - 6 - 7 8 - - - - - - - - - - -
+ifstmt - 9 - - - - - - - - - - - - - - - - - - - -
+If' - - - 10 11 - - - - - - - - - - - - - - - - -
+repeatSt - - - - - 12 - - - - - - - - - - - - - - - -
+assignSt - - - - - - - 13 - - - - - - - - - - - - - -
+readSt - - - - - - - - - 14 - - - - - - - - - - - -
+writeSt - - - - - - - - - - 15 - - - - - - - - - - -
+exp - - - - - - - 16 - - - - - - - - - - 16 - 16 -
+E’ 18 - 18 18 18 - 18 - - - - 17 17 17 - - - - - 18 - 18
+Cop - - - - - - - - - - - 19 20 21 - - - - - - - -
+Smpexp - - - - - - - 22 - - - - - - - - - - 22 - 22 -
+Smpexp’ 24 - 24 24 24 - 24 - - - - 24 24 24 23 23 - - - 24 - 24
+addOp - - - - - - - - - - - - - - 25 26 - - - - - -
+term - - - - - - - 27 - - - - - - - - - - 27 - 27 -
+term' 29 - 29 29 29 - 29 - - - - 29 29 29 29 29 28 28 - - - 29
+mulOp - - - - - - - - - - - - - - - - 30 31 - - - -
+factor - - - - - - - 34 - - - - - - - - - - - 32 33 -

@@ -5,14 +5,16 @@ using System.Text;
 
 namespace Compiler
 {
-    class rule
+    class Rule
     {
+        int num;
         //left side of the rule
-        Token from;
+       public readonly Token from;
         //reversed right side of the rule
-        Token[] to;
-        public rule(Token from, Token[] to)
+        public readonly Token[] to;
+        public Rule(int num,Token from, Token[] to)
         {
+            this.num = num;
             this.from = from;
             this.to = to;
         }

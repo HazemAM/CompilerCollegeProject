@@ -8,16 +8,7 @@ using System.Threading.Tasks;
 
 namespace Compiler
 {
-    public struct NodePair
-    {
-        public int FromNode;
-        public string Input;
-        
-        public NodePair(int FromNode, string Input){
-            this.FromNode = FromNode;
-            this.Input = Input;
-        }
-    }
+    
 
     class Lexical
     {

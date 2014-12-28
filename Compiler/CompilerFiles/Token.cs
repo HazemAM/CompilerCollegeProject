@@ -1,6 +1,6 @@
 ﻿namespace Compiler
 {
-    public struct Token
+    public class Token
     {
         public readonly TokenType type;
         public readonly string value;
@@ -11,12 +11,5 @@
         }
     }
 
-    public enum TokenType
-    {
-        EOF, Error, Comment,
-        ID, Num, NumFraction,
-        If, Then, Else, End, Repeat, Until, Read, Write,
-        Assign, Equal, LessThan, Plus, Minus, Times, LeftParentheses, RightParentheses, SemiColon,
-        AugmentedMinus, AugmentedPlus, Decrement, Increment
-    }
+    
 }
