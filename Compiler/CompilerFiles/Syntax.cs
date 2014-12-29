@@ -14,7 +14,9 @@ namespace Compiler
         SortedList<string,NonTerm> table;
         const string LL1Table = "..\\..\\LL1.txt";
         string msg;
-        bool flag = true;
+        int column;
+        int line;
+        bool errorFree;
         Stack<string> errors;
         public Syntax(List<Token>input)
         {
@@ -24,6 +26,9 @@ namespace Compiler
             rules = new SortedList<int, Rule>();
             table = new SortedList<string, NonTerm>();
             errors = new Stack<string>();
+            errorFree = true;
+            column = 1;
+            line = 1;
             readTxt();
             Parse();
         }
@@ -34,44 +39,66 @@ namespace Compiler
             progStack.Push(new Token(TokenType.EOF, "$"));
             progStack.Push(new Token(TokenType.NonTerminal,"prog"));
             List<Token> accepted = new List<Token>();
-            int count = 1;
+            
             while (input.Count != 0 || progStack.Count != 0)
             {
                 
                 Token first = input.Dequeue();
                 Token top = progStack.Pop();
                 if (top.type == first.type)
+                {
                     accepted.Add(first);
+                    if (top.type == TokenType.SemiColon)
+                    {
+                        line++;
+                        column=1;
+                    }
+                }
                 else if (top.type == TokenType.NonTerminal)
                 {
                     int rule = getRule(first.type, top.value);
-                    if (rule == 0)
-                        Error();
-                    else
-                        updateStack(rule, ref progStack);
+                    updateStack(top, first, rule, ref progStack, ref input);
 
                 }
                 else
-                    Error();
-                count++;
+                {
+                    errors.Push("expected: " + top.type.ToString() + "at line: " +line.ToString()+"at character: "+ column.ToString()+"\n");
+                    errorFree = false;
+                }
+                column++;
             }
-            if (input.Count != 0 || progStack.Count != 0)
-                msg = "accepted with errors";
-            else if (flag)
+             if (errorFree)
                 msg = "accepted";
+             else
+                 msg = "accepted with errors";
         }
 
-        private void updateStack(int rule,ref Stack<Token> progStack )
+        private void updateStack(Token top,Token first,int rule,ref Stack<Token> progStack,ref Queue<Token>inp)
         {
-            Rule r = rules[rule];
-            foreach (Token t in r.to)
-                progStack.Push(t);
+            if (rule != 0)
+            {
+                Rule r = rules[rule];
+                foreach (Token t in r.to)
+                    progStack.Push(t);
+            }           
+            else
+            {
+                errorFree = false;
+                Token temp=first;
+                NonTerm t = table[top.value];
+                 while (inp.Count!=0)
+                 {
+                     errors.Push("error at line :" + line.ToString() + "at character: " + column.ToString() + " removing :" + first.value + " from input to continue" + "\n");
+                      temp = inp.Dequeue();
+                      if (t.followSet[top.value].Contains(temp.type.ToString()))
+                          return;
+                 }
+                //might need to add code here to handle if stack is empty
+            }
         }
 
-        private void Error()
-        {
-            throw new NotImplementedException();
-        }
+
+       
 
         private int getRule(TokenType tokenType, string name)
         {
