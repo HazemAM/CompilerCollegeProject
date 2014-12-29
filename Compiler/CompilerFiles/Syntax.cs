@@ -15,6 +15,7 @@ namespace Compiler
         const string LL1Table = "..\\..\\LL1.txt";
         string msg;
         bool flag = true;
+        Stack<string> errors;
         public Syntax(List<Token>input)
         {
             this.input = new Queue<Token>();
@@ -22,6 +23,7 @@ namespace Compiler
                 this.input.Enqueue(t);
             rules = new SortedList<int, Rule>();
             table = new SortedList<string, NonTerm>();
+            errors = new Stack<string>();
             readTxt();
             Parse();
         }
@@ -32,8 +34,10 @@ namespace Compiler
             progStack.Push(new Token(TokenType.EOF, "$"));
             progStack.Push(new Token(TokenType.NonTerminal,"prog"));
             List<Token> accepted = new List<Token>();
+            int count = 1;
             while (input.Count != 0 || progStack.Count != 0)
             {
+                
                 Token first = input.Dequeue();
                 Token top = progStack.Pop();
                 if (top.type == first.type)
@@ -49,6 +53,7 @@ namespace Compiler
                 }
                 else
                     Error();
+                count++;
             }
             if (input.Count != 0 || progStack.Count != 0)
                 msg = "accepted with errors";
@@ -120,11 +125,24 @@ namespace Compiler
                 line = sr.ReadLine();
                 row = line.Split(' ');
                 count = 1;
+                bool done = false;
+                string[] follows=null;
                 NonTerm temp= new NonTerm(row[0]);
                 foreach (string term in terms)
                 {
                     if (row[count].StartsWith("-"))
+                    {
+                        if (!done)
+                        {
+                            follows = row[count].Split('/');
+                            follows.CopyTo(follows, 1);
+                            done = true;
+                        }
+                        
                         temp.AddContent(term, 0);
+                        temp.addFollow(term, follows);
+                        
+                    }
                     else
                         temp.AddContent(term, int.Parse(row[count]));
                     count++; 

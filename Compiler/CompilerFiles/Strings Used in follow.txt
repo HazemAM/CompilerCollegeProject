@@ -1,0 +1,7 @@
+/EOF
+/SemiColon/EOF/Else/Until/End
+/SemiColon/EOF/Else/Until/End/Then/RightParentheses
+/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal
+/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal/Plus/Minus
+/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal/Plus/Minus/Times/Division
+/LeftParentheses/Num/ID

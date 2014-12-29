@@ -1,16 +1,16 @@
-ÔªøPrg,stsq‚Äô,st,ifstmt,if‚Äô,repeatSt,assignSt,readSt,writeSt,exp,E‚Äô,Cop,Smpexp,Smpexp‚Äô,addOp,term,term',mulOp,factor
-1|Prg-st stsq‚Äô
-2|stsq‚Äô-SemiColon st stsq‚Äô
-3|stsq‚Äô-Empty
+Prg,stsqÅf,st,ifstmt,ifÅf,repeatSt,assignSt,readSt,writeSt,exp,EÅf,Cop,Smpexp,SmpexpÅf,addOp,term,term',mulOp,factor
+1|Prg-st stsqÅf
+2|stsqÅf-SemiColon st stsqÅf
+3|stsqÅf-Empty
 4|st-ifStmt
 5|st-repeatSt
 6|st-assignSt
 7|st-readSt
 8|st-writeSt
 9|ifstmt-If exp Then st stsq' if'
-10|if‚Äô-End
-11|if‚Äô-Else st stsq' End
-12|repeatSt-Repeat st stsq‚Äô Until exp
+10|ifÅf-End
+11|ifÅf-Else st stsq' End
+12|repeatSt-Repeat st stsqÅf Until exp
 13|assignSt-ID Assign exp
 14|readSt-Read ID
 15|writeSt-Write exp
@@ -20,14 +20,14 @@
 19|Cop-LessThan
 20|Cop-MoreThan
 21|Cop-Equal
-22|Smpexp-term Smpexp‚Äô
-23|Smpexp‚Äô-addOp term Smpexp‚Äô
-24|Smpexp‚Äô-Empty
+22|Smpexp-term SmpexpÅf
+23|SmpexpÅf-addOp term SmpexpÅf
+24|SmpexpÅf-Empty
 25|addOp-Plus
 26|addOp-Minus
-27|term-factor term‚Äô
-28|term‚Äô-mulop factor term‚Äô
-29|term‚Äô-Empty
+27|term-factor termÅf
+28|termÅf-mulop factor termÅf
+29|termÅf-Empty
 30|mulOp-Times
 31|mulOp-Division
 32|factor-LeftParentheses exp RightParentheses
@@ -35,22 +35,22 @@
 34|factor-ID
 #
 SemiColon If Then End Else Repeat Until ID Assign Read Write LessThan MoreThan Equal Plus Minus Times Division LeftParentheses RightParentheses Num EOF
-Prg - 1 - - - 1 - 1 - 1 1 - - - - - - - - - - -
-Stsq' 2 - - 3 3 - 3 - - - - - - - - - - - - - - 3
-St - 4 - - - 5 - 6 - 7 8 - - - - - - - - - - -
-ifstmt - 9 - - - - - - - - - - - - - - - - - - - -
-If' - - - 10 11 - - - - - - - - - - - - - - - - -
-repeatSt - - - - - 12 - - - - - - - - - - - - - - - -
-assignSt - - - - - - - 13 - - - - - - - - - - - - - -
-readSt - - - - - - - - - 14 - - - - - - - - - - - -
-writeSt - - - - - - - - - - 15 - - - - - - - - - - -
-exp - - - - - - - 16 - - - - - - - - - - 16 - 16 -
-E‚Äô 18 - 18 18 18 - 18 - - - - 17 17 17 - - - - - 18 - 18
-Cop - - - - - - - - - - - 19 20 21 - - - - - - - -
-Smpexp - - - - - - - 22 - - - - - - - - - - 22 - 22 -
-Smpexp‚Äô 24 - 24 24 24 - 24 - - - - 24 24 24 23 23 - - - 24 - 24
-addOp - - - - - - - - - - - - - - 25 26 - - - - - -
-term - - - - - - - 27 - - - - - - - - - - 27 - 27 -
-term' 29 - 29 29 29 - 29 - - - - 29 29 29 29 29 28 28 - - - 29
-mulOp - - - - - - - - - - - - - - - - 30 31 - - - -
-factor - - - - - - - 34 - - - - - - - - - - - 32 33 -
+Prg -/EOF 1 - - - 1 - 1 - 1 1 - - - - - - - - - - -
+Stsq' 2 -/EOF/Else/Until/End - 3 3 - 3 - - - - - - - - - - - - - - 3
+St -/SemiColon/EOF/Else/Until/End 4 - - - 5 - 6 - 7 8 - - - - - - - - - - -
+ifstmt -/SemiColon/EOF/Else/Until/End 9 - - - - - - - - - - - - - - - - - - - -
+If' -/SemiColon/EOF/Else/Until/End - - 10 11 - - - - - - - - - - - - - - - - -
+repeatSt -/SemiColon/EOF/Else/Until/End - - - - 12 - - - - - - - - - - - - - - - -
+assignSt -/SemiColon/EOF/Else/Until/End - - - - - - 13 - - - - - - - - - - - - - -
+readSt -/SemiColon/EOF/Else/Until/End - - - - - - - - 14 - - - - - - - - - - - -
+writeSt -/SemiColon/EOF/Else/Until/End - - - - - - - - - 15 - - - - - - - - - - -
+exp -/SemiColon/EOF/Else/Until/End/Then/RightParentheses - - - - - - 16 - - - - - - - - - - 16 - 16 -
+EÅf 18 -/SemiColon/EOF/Else/Until/End/Then/RightParentheses 18 18 18 - 18 - - - - 17 17 17 - - - - - 18 - 18
+Cop -/LeftParentheses/Num/ID - - - - - - - - - - 19 20 21 - - - - - - - -
+Smpexp -/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal - - - - - - 22 - - - - - - - - - - 22 - 22 -
+SmpexpÅf 24 -/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal 24 24 24 - 24 - - - - 24 24 24 23 23 - - - 24 - 24
+addOp -/LeftParentheses/Num/ID - - - - - - - - - - - - - 25 26 - - - - - -
+term -/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal/Plus/Minus - - - - - - 27 - - - - - - - - - - 27 - 27 -
+term' 29 -/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal/Plus/Minus 29 29 29 - 29 - - - - 29 29 29 29 29 28 28 - - - 29
+mulOp -/LeftParentheses/Num/ID - - - - - - - - - - - - - - - 30 31 - - - -
+factor -/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal/Plus/Minus/Times/Division - - - - - - 34 - - - - - - - - - - - 32 33 -
