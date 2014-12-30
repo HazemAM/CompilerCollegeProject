@@ -42,14 +42,15 @@ namespace Compiler
             prog=new TreeNode(NodeType.Statements,"Prg");
             Stack<Token> progStack = new Stack<Token>();
             progStack.Push(new Token(TokenType.EOF, "$"));
-            progStack.Push(new Token(TokenType.NonTerminal,"prog"));
+            progStack.Push(new Token(TokenType.NonTerminal,"Prg"));
+            progNode.Push(new TreeNode(NodeType.Write,"Dummy"));
             progNode.Push(prog);
             List<Token> accepted = new List<Token>();
-            
-            while (input.Count != 0 || progStack.Count != 0)
+            Token first = input.Dequeue();
+            while (input.Count != 0 && progStack.Count != 0)
             {
                 
-                Token first = input.Dequeue();
+                
                 Token top = progStack.Pop();
                 cur = progNode.Pop();
                 if (top.type == first.type)
@@ -60,6 +61,7 @@ namespace Compiler
                         line++;
                         column=1;
                     }
+                    first = input.Dequeue();
                 }
                 else if (top.type == TokenType.NonTerminal)
                 {
@@ -85,11 +87,16 @@ namespace Compiler
             if (rule != 0)
             {
                 Rule r = rules[rule];
-                foreach (Token t in r.to)
+                Token [] s=r.to.Reverse<Token>().ToArray();
+                foreach (Token t in s)
                 {
                     if (t.type != TokenType.Empty)
                     {
-                        TreeNode temp=new TreeNode((NodeType)Enum.Parse(typeof(NodeType), t.type.ToString()), t.value);
+                        TreeNode temp;
+                        if (t.type == TokenType.NonTerminal)
+                            temp = new TreeNode((NodeType)Enum.Parse(typeof(NodeType), t.value), t.value);
+                        else
+                            temp=new TreeNode(t.type, t.value);
                         cur.addChilds(temp);
                         progStack.Push(t);
                         progNode.Push(temp);
@@ -105,7 +112,7 @@ namespace Compiler
                  {
                      errors.Push("error at line :" + line.ToString() + "at character: " + column.ToString() + " removing :" + first.value + " from input to continue" + "\n");
                       temp = inp.Dequeue();
-                      if (t.followSet[top.value].Contains(temp.type.ToString()))
+                      if (t.followSet.ContainsKey(temp.type.ToString()))
                           return;
                  }
                 //might need to add code here to handle if stack is empty
@@ -155,6 +162,7 @@ namespace Compiler
                 Token t = new Token(TokenType.NonTerminal, left);
                 rules.Add(count,new Rule(count,t, tk));
                 line = sr.ReadLine();
+                count++;
             }
 
             //reading table content
@@ -168,21 +176,23 @@ namespace Compiler
                 row = line.Split(' ');
                 count = 1;
                 bool done = false;
-                string[] follows=null;
+                List<string> follows=new List<string>();
                 NonTerm temp= new NonTerm(row[0]);
+                string[] res = null;
                 foreach (string term in terms)
                 {
                     if (row[count].StartsWith("-"))
                     {
                         if (!done)
                         {
-                            follows = row[count].Split('/');
-                            follows.CopyTo(follows, 1);
+                            follows = row[count].Split('/').ToList<string>();
+                            follows.RemoveAt(0);
+                            res = follows.ToArray();
                             done = true;
                         }
                         
                         temp.AddContent(term, 0);
-                        temp.addFollow(term, follows);
+                        temp.addFollow(term, res);
                         
                     }
                     else

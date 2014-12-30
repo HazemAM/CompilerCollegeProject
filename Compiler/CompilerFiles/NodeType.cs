@@ -30,5 +30,6 @@ namespace Compiler
         Until,
         Number,
         ID,
+        Prg, stsqc, st, ifStmt, ifc, repeatSt, assignSt, readSt, writeSt, exp, Ec, Cop, Smpexp, Smpexpc, addOp, term, termc, mulOp, 
     }
 }
