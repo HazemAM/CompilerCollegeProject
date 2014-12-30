@@ -20,7 +20,7 @@ namespace Compiler
         Stack<string> errors;
         TreeNode cur;
         Stack<TreeNode> progNode;
-        public readonly TreeNode prog;
+        TreeNode prog;
         public Syntax(List<Token>input)
         {
             this.input = new Queue<Token>();
@@ -203,6 +203,10 @@ namespace Compiler
 
             }
             sr.Close();
+        }
+        public TreeNode getTree()
+        {
+            return prog;
         }
     }
 }
