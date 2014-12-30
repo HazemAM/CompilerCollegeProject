@@ -20,6 +20,7 @@ namespace Compiler
         Stack<string> errors;
         TreeNode cur;
         Stack<TreeNode> progNode;
+        TreeNode prog;
         public Syntax(List<Token>input)
         {
             this.input = new Queue<Token>();
@@ -38,8 +39,7 @@ namespace Compiler
 
         private void Parse()
         {
-            TreeNode prog=new TreeNode(NodeType.Statements,"Prg");
-            cur = prog;
+            prog=new TreeNode(NodeType.Statements,"Prg");
             Stack<Token> progStack = new Stack<Token>();
             progStack.Push(new Token(TokenType.EOF, "$"));
             progStack.Push(new Token(TokenType.NonTerminal,"prog"));
