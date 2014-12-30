@@ -38,7 +38,7 @@ SemiColon If Then End Else Repeat Until ID Assign Read Write LessThan MoreThan E
 Prg -/EOF 1 - - - 1 - 1 - 1 1 - - - - - - - - - - -
 stsqc 2 -/EOF/Else/Until/End - 3 3 - 3 - - - - - - - - - - - - - - 3
 st -/SemiColon/EOF/Else/Until/End 4 - - - 5 - 6 - 7 8 - - - - - - - - - - -
-ifstmt -/SemiColon/EOF/Else/Until/End 9 - - - - - - - - - - - - - - - - - - - -
+ifStmt -/SemiColon/EOF/Else/Until/End 9 - - - - - - - - - - - - - - - - - - - -
 ifc -/SemiColon/EOF/Else/Until/End - - 10 11 - - - - - - - - - - - - - - - - -
 repeatSt -/SemiColon/EOF/Else/Until/End - - - - 12 - - - - - - - - - - - - - - - -
 assignSt -/SemiColon/EOF/Else/Until/End - - - - - - 13 - - - - - - - - - - - - - -

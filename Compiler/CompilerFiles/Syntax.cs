@@ -71,7 +71,7 @@ namespace Compiler
                 }
                 else
                 {
-                    errors.Push("expected: " + top.type.ToString() + "at line: " +line.ToString()+"at character: "+ column.ToString()+"\n");
+                    errors.Push("expected: " + top.type.ToString() + " at line: " +line.ToString()+" at character: "+ column.ToString());
                     errorFree = false;
                 }
                 column++;
@@ -110,7 +110,7 @@ namespace Compiler
                 NonTerm t = table[top.value];
                  while (inp.Count!=0)
                  {
-                     errors.Push("error at line :" + line.ToString() + "at character: " + column.ToString() + " removing :" + first.value + " from input to continue" + "\n");
+                     errors.Push("error at line :" + line.ToString() + "at character: " + column.ToString() + " removing :" + first.value + " from input to continue");
                       temp = inp.Dequeue();
                       if (t.followSet.ContainsKey(temp.type.ToString()))
                           return;
