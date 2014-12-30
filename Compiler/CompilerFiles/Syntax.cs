@@ -20,7 +20,7 @@ namespace Compiler
         Stack<string> errors;
         TreeNode cur;
         Stack<TreeNode> progNode;
-        TreeNode prog;
+        public readonly TreeNode prog;
         public Syntax(List<Token>input)
         {
             this.input = new Queue<Token>();
