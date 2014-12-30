@@ -25,13 +25,17 @@ namespace Compiler
         private void btnRun_Click(object sender, EventArgs e){
             tableLog.Items.Clear(); //Clear old log.
             
+            /** LEXICAL ANALYSIS */
             //Analyze input code:
-            lexical.analyze(txtCode.Text);
+            List<Token> tokens = lexical.analyze(txtCode.Text);
             
             List<string[]> log = lexical.getLog();
             foreach(string[] row in log)
                 tableLog.Items.Add(new ListViewItem(row));
             tableLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            /** SYNTAX ANALYSIS */
+            Syntax syntax = new Syntax(tokens);
         }
 
         private void txtCode_KeyUp(object sender, KeyEventArgs e){
