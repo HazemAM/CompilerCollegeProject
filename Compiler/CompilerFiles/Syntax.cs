@@ -18,6 +18,8 @@ namespace Compiler
         int line;
         bool errorFree;
         Stack<string> errors;
+        TreeNode cur;
+        Stack<TreeNode> progNode;
         public Syntax(List<Token>input)
         {
             this.input = new Queue<Token>();
@@ -26,6 +28,7 @@ namespace Compiler
             rules = new SortedList<int, Rule>();
             table = new SortedList<string, NonTerm>();
             errors = new Stack<string>();
+            progNode = new Stack<TreeNode>();
             errorFree = true;
             column = 1;
             line = 1;
@@ -35,9 +38,12 @@ namespace Compiler
 
         private void Parse()
         {
+            TreeNode prog=new TreeNode(NodeType.Statements,"Prg");
+            cur = prog;
             Stack<Token> progStack = new Stack<Token>();
             progStack.Push(new Token(TokenType.EOF, "$"));
             progStack.Push(new Token(TokenType.NonTerminal,"prog"));
+            progNode.Push(prog);
             List<Token> accepted = new List<Token>();
             
             while (input.Count != 0 || progStack.Count != 0)
@@ -45,6 +51,7 @@ namespace Compiler
                 
                 Token first = input.Dequeue();
                 Token top = progStack.Pop();
+                cur = progNode.Pop();
                 if (top.type == first.type)
                 {
                     accepted.Add(first);
@@ -79,7 +86,15 @@ namespace Compiler
             {
                 Rule r = rules[rule];
                 foreach (Token t in r.to)
-                    progStack.Push(t);
+                {
+                    if (t.type != TokenType.Empty)
+                    {
+                        TreeNode temp=new TreeNode((NodeType)Enum.Parse(typeof(NodeType), t.type.ToString()), t.value);
+                        cur.addChilds(temp);
+                        progStack.Push(t);
+                        progNode.Push(temp);
+                    }
+                }
             }           
             else
             {
