@@ -66,12 +66,13 @@ namespace Compiler
                 else if (top.type == TokenType.NonTerminal)
                 {
                     int rule = getRule(first.type, top.value);
-                    updateStack(top, first, rule, ref progStack, ref input);
+                    updateStack(top, ref first, rule, ref progStack, ref input);
 
                 }
                 else
                 {
                     errors.Push("expected: " + top.type.ToString() + " at line: " +line.ToString()+" at character: "+ column.ToString());
+                    first = input.Dequeue();
                     errorFree = false;
                 }
                 column++;
@@ -82,7 +83,7 @@ namespace Compiler
                  msg = "accepted with errors";
         }
 
-        private void updateStack(Token top,Token first,int rule,ref Stack<Token> progStack,ref Queue<Token>inp)
+        private void updateStack(Token top,ref Token first,int rule,ref Stack<Token> progStack,ref Queue<Token>inp)
         {
             if (rule != 0)
             {
@@ -106,13 +107,12 @@ namespace Compiler
             else
             {
                 errorFree = false;
-                Token temp=first;
                 NonTerm t = table[top.value];
                  while (inp.Count!=0)
                  {
                      errors.Push("error at line :" + line.ToString() + "at character: " + column.ToString() + " removing :" + first.value + " from input to continue");
-                      temp = inp.Dequeue();
-                      if (t.followSet.ContainsKey(temp.type.ToString()))
+                      first = inp.Dequeue();
+                      if (t.followSet.ContainsKey(first.type.ToString()))
                           return;
                  }
                 //might need to add code here to handle if stack is empty

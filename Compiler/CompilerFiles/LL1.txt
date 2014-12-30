@@ -53,4 +53,4 @@ addOp -/LeftParentheses/Num/ID - - - - - - - - - - - - - 25 26 - - - - - -
 term -/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal/Plus/Minus - - - - - - 27 - - - - - - - - - - 27 - 27 -
 termc 29 -/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal/Plus/Minus 29 29 29 - 29 - - - - 29 29 29 29 29 28 28 - - - 29
 mulOp -/LeftParentheses/Num/ID - - - - - - - - - - - - - - - 30 31 - - - -
-factor -/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal/Plus/Minus/Times/Division - - - - - - 34 - - - - - - - - - - - 32 33 -
+factor -/SemiColon/EOF/Else/Until/End/Then/RightParentheses/LessThan/MoreThan/Equal/Plus/Minus/Times/Division - - - - - - 34 - - - - - - - - - - 32 - 33 -
