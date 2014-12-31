@@ -61,6 +61,7 @@ namespace Compiler
                 cur = progNode.Pop();
                 if (top.type == first.type)
                 {
+                    cur.value = first.value;
                     accepted.Add(first);
                     if (top.type == TokenType.SemiColon)
                     {

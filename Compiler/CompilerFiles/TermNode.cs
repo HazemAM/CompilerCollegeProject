@@ -12,5 +12,9 @@ namespace Compiler
         {
             this.nodeType = nodeType;
         }
+        public TokenType getType()
+        {
+            return nodeType;
+        }
     }
 }

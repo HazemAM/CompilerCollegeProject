@@ -9,7 +9,7 @@ namespace Compiler
     {
         
         public readonly List<TreeNode> childs;
-        public readonly string value;
+        public  string value;
         
         public TreeNode(string value)
         {
@@ -20,5 +20,6 @@ namespace Compiler
         {
             childs.Add(child);
         }
+        
     }
 }
