@@ -17,7 +17,7 @@ namespace Compiler
         int column;
         int line;
         bool errorFree;
-        Stack<string> errors;
+        public Stack<string> errors;
         TreeNode cur;
         Stack<TreeNode> progNode;
         TreeNode prog;

@@ -25,6 +25,8 @@ namespace Compiler
         private string[] reservedWords = null;
         private List<string[]> log = new List<string[]>();
         private List<Token> acceptedTokens = new List<Token>();
+
+        bool success = true;
         
 
         /** FUNCTIONS */
@@ -81,10 +83,12 @@ namespace Compiler
         /// <summary>Analyze a piece of code lexically.</summary>
         /// <param name="code">The code to analyze.</param>
         /// <returns>List object of accepted tokens.</returns>
-        public List<Token> analyze(string code){
+        public List<Token> analyze(string code, out bool succ){
             log.Clear();
             acceptedTokens.Clear();
             analyzeStart(code);
+
+            succ = success;
 
             return acceptedTokens;
         }
@@ -139,7 +143,8 @@ namespace Compiler
         private void rejectStreak(string streak){
             if(streak!=" " && streak!="\r" && streak!="\n" && streak!="\t" && streak!=String.Empty){
                 log.Add( new string[]{"REJECTED", streak, "--"} );
-                
+                success = false;
+
                 /*Token token = toToken(streak, "Error");
                 acceptedTokens.Add(token);*/
             }

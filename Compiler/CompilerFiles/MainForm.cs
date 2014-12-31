@@ -27,12 +27,18 @@ namespace Compiler
             
             /** LEXICAL ANALYSIS */
             //Analyze input code:
-            List<Token> tokens = lexical.analyze(txtCode.Text);
+            bool lexicalSuccess;
+            List<Token> tokens = lexical.analyze(txtCode.Text, out lexicalSuccess);
             
             List<string[]> log = lexical.getLog();
             foreach(string[] row in log)
                 tableLog.Items.Add(new ListViewItem(row));
             tableLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
+
+            if(!lexicalSuccess){
+                MessageBox.Show("This code contains lexical error(s).", "Lexical errors", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
 
 
 
@@ -40,13 +46,19 @@ namespace Compiler
             Syntax syntax = new Syntax(tokens);
             TreeNode tree = syntax.getTree();
 
+            if(syntax.errors.Count != 0){
+                string errors = "The following symantic errors found:\n";
+                foreach(string error in syntax.errors)
+                    errors += error+'\n';
+                MessageBox.Show(errors, "Symantic errors", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
             //Syntax tree:
             TreeForm treeForm = new TreeForm();
             System.Windows.Forms.TreeNode root = treeForm.treeSyntax.GetNodeAt(0,0);
             DrawTree.DisplayParseTree(tree, root);
             treeForm.Text = "Syntax Tree";
             treeForm.Show();
-
 
 
             /** SEMANTIC ANALYSIS */
