@@ -98,8 +98,7 @@
             this.txtCode.Name = "txtCode";
             this.txtCode.Size = new System.Drawing.Size(213, 340);
             this.txtCode.TabIndex = 0;
-            this.txtCode.Text = "x := 3 ;\r\nread y ;\r\n\r\nif x < y\r\n\r\nrepeat \r\n\r\nwrite x ;\r\nx := x + 1 ;\r\nuntil y < x" +
-    "\r\n\r\nend";
+            this.txtCode.Text = "a:=5;\r\nd:=3+5;\r\nif a < 10 then \r\n\tc:=d \r\nend;\r\nx := (2+3)*4\r\n";
             this.txtCode.KeyUp += new System.Windows.Forms.KeyEventHandler(this.txtCode_KeyUp);
             // 
             // tableLog

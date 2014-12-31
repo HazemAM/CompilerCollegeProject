@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-
+﻿using System.Linq;
 
 namespace Compiler
 {
@@ -10,12 +6,7 @@ namespace Compiler
     {
         public static void DisplayParseTree(TreeNode Node, System.Windows.Forms.TreeNode DisplayNode)
         {
-            TreeNode OpNode;
-
-            int count = Node.childs.Count;
-
-            OpNode = (TreeNode)Node;
-            DisplayNode.Text = OpNode.value;
+            DisplayNode.Text = Node.value;
 
             for(int i=0; i<Node.childs.Count; i++)
             {
@@ -24,6 +15,5 @@ namespace Compiler
                 DisplayNode.Nodes.Add(newNode);
             }
         }
-
     }
 }

@@ -34,6 +34,8 @@ namespace Compiler
                 tableLog.Items.Add(new ListViewItem(row));
             tableLog.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
 
+
+
             /** SYNTAX ANALYSIS */
             Syntax syntax = new Syntax(tokens);
             TreeNode tree = syntax.getTree();
@@ -44,6 +46,11 @@ namespace Compiler
             DrawTree.DisplayParseTree(tree, root);
             treeForm.Text = "Syntax Tree";
             treeForm.Show();
+
+
+
+            /** SEMANTIC ANALYSIS */
+            Semantic.GetSemanticTree( treeForm.treeSyntax.GetNodeAt(0,0) );
         }
 
         private void txtCode_KeyUp(object sender, KeyEventArgs e){
