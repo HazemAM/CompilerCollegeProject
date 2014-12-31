@@ -36,6 +36,14 @@ namespace Compiler
 
             /** SYNTAX ANALYSIS */
             Syntax syntax = new Syntax(tokens);
+            TreeNode tree = syntax.getTree();
+
+            //Syntax tree:
+            TreeForm treeForm = new TreeForm();
+            System.Windows.Forms.TreeNode root = treeForm.treeSyntax.GetNodeAt(0,0);
+            DrawTree.DisplayParseTree(tree, root);
+            treeForm.Text = "Syntax Tree";
+            treeForm.Show();
         }
 
         private void txtCode_KeyUp(object sender, KeyEventArgs e){

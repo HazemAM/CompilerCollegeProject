@@ -137,11 +137,11 @@ namespace Compiler
         }
 
         private void rejectStreak(string streak){
-            if(streak!=" " && streak!="\r" && streak!="\n" && streak!=String.Empty){
+            if(streak!=" " && streak!="\r" && streak!="\n" && streak!="\t" && streak!=String.Empty){
                 log.Add( new string[]{"REJECTED", streak, "--"} );
                 
-                Token token = toToken(streak, "Error");
-                acceptedTokens.Add(token);
+                /*Token token = toToken(streak, "Error");
+                acceptedTokens.Add(token);*/
             }
         }
 
@@ -188,8 +188,8 @@ namespace Compiler
                 type = TokenType.Comment;
             else if(desc.StartsWith("eof"))
                 type = TokenType.EOF;
-            else if(desc.StartsWith("error"))
-                type = TokenType.Error;
+            /*else if(desc.StartsWith("error"))
+                type = TokenType.Error;*/
             else if(desc.StartsWith("reserved"))
             {
                 switch(value){
