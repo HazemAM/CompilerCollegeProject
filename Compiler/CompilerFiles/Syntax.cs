@@ -39,19 +39,25 @@ namespace Compiler
 
         private void Parse()
         {
-            prog=new TreeNode(NodeType.Statements,"Prg");
+            prog=new TreeNode("Prg");
             Stack<Token> progStack = new Stack<Token>();
             progStack.Push(new Token(TokenType.EOF, "$"));
             progStack.Push(new Token(TokenType.NonTerminal,"Prg"));
-            progNode.Push(new TreeNode(NodeType.Write,"Dummy"));
+            progNode.Push(new TreeNode("Dummy"));
             progNode.Push(prog);
             List<Token> accepted = new List<Token>();
             Token first = input.Dequeue();
-            while (input.Count != 0 && progStack.Count != 0)
+            Token top;
+            while (input.Count != 0 || progStack.Count != 0)
             {
-                
-                
-                Token top = progStack.Pop();
+
+                if (progStack.Count > 0)
+                    top = progStack.Pop();
+                else
+                {
+                    msg = "check error log the prog stack became empty for a reason";
+                    break;
+                }
                 cur = progNode.Pop();
                 if (top.type == first.type)
                 {
@@ -61,6 +67,7 @@ namespace Compiler
                         line++;
                         column=1;
                     }
+                    if(input.Count>0)
                     first = input.Dequeue();
                 }
                 else if (top.type == TokenType.NonTerminal)
@@ -72,6 +79,7 @@ namespace Compiler
                 else
                 {
                     errors.Push("expected: " + top.type.ToString() + " at line: " +line.ToString()+" at character: "+ column.ToString());
+                    if(input.Count>0)
                     first = input.Dequeue();
                     errorFree = false;
                 }
@@ -95,9 +103,9 @@ namespace Compiler
                     {
                         TreeNode temp;
                         if (t.type == TokenType.NonTerminal)
-                            temp = new TreeNode((NodeType)Enum.Parse(typeof(NodeType), t.value), t.value);
+                            temp = new NonTermNode((NodeType)Enum.Parse(typeof(NodeType), t.value), t.value);
                         else
-                            temp=new TreeNode(t.type, t.value);
+                            temp=new TermNode(t.type, t.value);
                         cur.addChilds(temp);
                         progStack.Push(t);
                         progNode.Push(temp);
