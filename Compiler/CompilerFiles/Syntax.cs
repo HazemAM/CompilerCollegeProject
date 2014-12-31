@@ -33,7 +33,7 @@ namespace Compiler
             errorFree = true;
             column = 1;
             line = 1;
-            readTxt();
+            readFile();
             Parse();
         }
 
@@ -96,7 +96,7 @@ namespace Compiler
             if (rule != 0)
             {
                 Rule r = rules[rule];
-                Token [] s=r.to.Reverse<Token>().ToArray();
+                Token [] s=r.RHS.Reverse<Token>().ToArray();
                 foreach (Token t in s)
                 {
                     if (t.type != TokenType.Empty)
@@ -136,7 +136,7 @@ namespace Compiler
             return t.content[tokenType.ToString()];
         }
 
-        private void readTxt()
+        private void readFile()
         {
             StreamReader sr = new StreamReader(LL1Table);
             string line = sr.ReadLine();

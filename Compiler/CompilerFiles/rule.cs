@@ -9,14 +9,14 @@ namespace Compiler
     {
         int num;
         //left side of the rule
-       public readonly Token from;
+       public readonly Token LHS;
         //reversed right side of the rule
-        public readonly Token[] to;
+        public readonly Token[] RHS;
         public Rule(int num,Token from, Token[] to)
         {
             this.num = num;
-            this.from = from;
-            this.to = to;
+            this.LHS = from;
+            this.RHS = to;
         }
     }
 }
